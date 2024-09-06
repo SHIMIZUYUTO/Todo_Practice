@@ -117,7 +117,11 @@ class _TodoAddPageState extends State<TodoAddPage> {
                   backgroundColor: Colors.blue, // ボタンの背景色
                   foregroundColor: Colors.white, // ボタンのテキスト色
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // "pop"で前の画面に戻る
+                  // "pop"の引数から前の画面にデータを渡す
+                  Navigator.of(context).pop(_text);
+                },
                 child: Text('リスト追加'),
               ),
             ),
