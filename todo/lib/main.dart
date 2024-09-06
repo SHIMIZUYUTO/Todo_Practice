@@ -20,7 +20,15 @@ class MyTodoApp extends StatelessWidget {
 }
 
 // リスト一覧画面用Widget
-class TodoListPage extends StatelessWidget {
+class TodoListPage extends StatefulWidget {
+  @override
+  _TodoListPageState createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
+  // Todoリストのデータ
+  List<String> todoList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,31 +36,16 @@ class TodoListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('リスト一覧'),
       ),
-      // ListViewを使いリスト一覧を表示
-      body: ListView(
-        children: <Widget>[
-          // CardとListTileを使い、簡単に整ったUIを作成
-          Card(
+      // データを元にListViewを作成
+      body: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context,index) {
+          return Card(
             child: ListTile(
-              title: Text('ニンジンを買う'),
+              title: Text(todoList[index]),
             ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('タマネギを買う'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('ジャガイモを買う'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text('カレールーを買う'),
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -66,6 +59,9 @@ class TodoListPage extends StatelessWidget {
           );
           if(newListText != null){
             // キャンセルした場合は newListText は null となるので注意
+            setState(() {
+              todoList.add(newListText);
+            });
           }
         },
         child: Icon(Icons.add),
@@ -74,6 +70,7 @@ class TodoListPage extends StatelessWidget {
   }
 }
 
+// リスト追加画面用Widget
 class TodoAddPage extends StatefulWidget {
   @override
   _TodoAddPageState createState() => _TodoAddPageState();
